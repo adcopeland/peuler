@@ -9,7 +9,7 @@ if [[ $# -ne 2 ]]; then
   exit 2
 fi
 
-if [[ "$1" != "golang" ]] && [[ "$1" != "rust" ]]; then
+if [[ "$1" != "golang" ]] && [[ "$1" != "rust" ]] && [[ "$1" != "cpp" ]]; then
   echo "language options are golang or rust"
   exit 2
 fi
