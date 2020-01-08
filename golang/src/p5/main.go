@@ -8,7 +8,7 @@ import "fmt"
 func main() {
 	n := 20
 	for {
-		if divisible_by_all(n) {
+		if divisibleByAll(n) {
 			break
 		}
 		n++
@@ -17,7 +17,7 @@ func main() {
 	fmt.Println(n)
 }
 
-func divisible_by_all(n int) bool {
+func divisibleByAll(n int) bool {
 	for i := 2; i <= 20; i++ {
 		if n%i != 0 {
 			return false
