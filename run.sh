@@ -14,9 +14,4 @@ if [[ "$1" != "golang" ]] && [[ "$1" != "rust" ]] && [[ "$1" != "cpp" ]]; then
   exit 2
 fi
 
-if [[ ! -d $1/src/p$2 ]]; then
-  echo "That problem has not been solved yet"
-  exit 2
-fi
-
 make -C $1 PROBLEM=$2
