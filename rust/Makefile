@@ -10,4 +10,4 @@ all: $(TARGET)
 
 .PHONY: $(TARGET)
 $(TARGET):
-	@cd peuler && cargo build --release
+	@cd peuler && cargo build --release --bin p$(PROBLEM)
