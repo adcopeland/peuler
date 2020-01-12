@@ -1,14 +1,5 @@
 #include <iostream>
-
-bool isPrime(int n) {
-  const int stop = n >> 1;
-  for (int i = 2; i <= stop; ++i) {
-    if (n % i == 0) {
-      return false;
-    }
-  }
-  return true;
-}
+#include "utils.h"
 
 int main() {
   int primeIdx = 0;

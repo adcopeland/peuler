@@ -10,5 +10,5 @@ all: $(TARGET)
 	@time -f "%E seconds" $(TARGET)
 
 $(TARGET): $(SOURCES)
-	go build -o $@ $(SOURCES)
+	GOPATH=`pwd` go build -o $@ $(SOURCES)
 

@@ -10,7 +10,7 @@ all: $(TARGET)
 	@time -f "%E seconds" $(TARGET)
 
 $(TARGET): $(SOURCES) | build
-	g++ -O3 -Wall -Werror -flto -std=c++17 -o $@ $(SOURCES)
+	g++ -I src/acommon -O3 -Wall -Werror -flto -pthread -std=c++17 -o $@ $(SOURCES)
 
 build:
 	@mkdir -p build/cpp
