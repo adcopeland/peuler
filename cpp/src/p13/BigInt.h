@@ -58,8 +58,7 @@ inline void BigInt::Add(const BigInt& other)
   }
 
   if (rollover) {
-    m_self.resize(m_self.size()+1);
-    m_self[m_self.size()-1] = '1';
+    m_self.push_back('1');
   }
 }
 
