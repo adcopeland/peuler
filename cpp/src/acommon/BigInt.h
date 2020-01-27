@@ -8,7 +8,7 @@
 #include <iostream>
 
 // Enough of a BigInt to work for problem 13 (add only)
-// Definitely not for general use
+// Definitely not for general use, but in here because it was useful for problem 16 too
 class BigInt
 {
   public:
@@ -19,7 +19,8 @@ class BigInt
     void Add(const BigInt& other);
 
     // Get the string form of this BigInt
-    std::string String() const;
+    std::string String() const
+      { return reverse(m_self); }
 
   private:
     // reverse the in string and return it
