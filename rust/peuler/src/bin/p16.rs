@@ -1,7 +1,7 @@
 // Reusing logic from p13.
 fn main() {
 	// start at 2^0, loop 1000 times
-  let mut current = peuler::BigInt::new("1");
+  let mut current = peuler::my_big_int::BigInt::new("1");
   for _i in 0..1000 {
 		// Add the number to itself to double it. This takes 2^n => 2^(n+1)
     current += &current.clone();

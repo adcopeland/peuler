@@ -1,7 +1,7 @@
 fn main() {
-  let mut sum = peuler::BigInt::new("0");
+  let mut sum = peuler::my_big_int::BigInt::new("0");
   for d in DATA.iter() {
-    sum += &peuler::BigInt::new(d);
+    sum += &peuler::my_big_int::BigInt::new(d);
   }
 
   println!("{}", sum);
