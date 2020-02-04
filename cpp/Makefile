@@ -5,12 +5,17 @@ endif
 SOURCES:=$(wildcard src/p$(PROBLEM)/*cc)
 TARGET:=build/p$(PROBLEM)
 
+CXXFLAGS?=-Isrc/acommon -Isrc/p$(PROBLEM) -O3 -Wall -Werror -flto -pthread -std=c++17
+
 all: $(TARGET)
 	@echo Running $(TARGET)...
 	@time -f "%E seconds" $(TARGET)
 
 $(TARGET): $(wildcard src/p$(PROBLEM)/*) | build
-	g++ -I src/acommon -I src/p$(PROBLEM) -O3 -Wall -Werror -flto -pthread -std=c++17 -o $@ $(SOURCES)
+	$(CXX) $(CXXFLAGS) -o $@ $(SOURCES)
 
 build:
 	@mkdir -p build/cpp
+
+clean:
+	@rm -rf build
