@@ -14,4 +14,4 @@ if [[ "$1" != "golang" ]] && [[ "$1" != "rust" ]] && [[ "$1" != "cpp" ]]; then
   exit 2
 fi
 
-make -C $1 PROBLEM=$2
+make LANGUAGE=$1 PROBLEM=$2
