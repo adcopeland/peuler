@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <ctype.h>
 #include <stdexcept>
@@ -9,6 +10,7 @@
 
 // Enough of a BigInt to work for problem 13 (add only)
 // Definitely not for general use, but in here because it was useful for problem 16 too
+// ...and then added multiplication for problem 20
 class BigInt
 {
   public:
@@ -18,9 +20,15 @@ class BigInt
     // Add other to this BigInt
     void Add(const BigInt& other);
 
+    // Multiply other to this BigInt
+    void Mul(const BigInt& other);
+
     // Get the string form of this BigInt
     std::string String() const
       { return reverse(m_self); }
+
+    // returns true if other is less than this
+    bool operator<(const BigInt& other) const;
 
   private:
     // reverse the in string and return it
@@ -61,6 +69,33 @@ inline void BigInt::Add(const BigInt& other)
   if (rollover) {
     m_self.push_back('1');
   }
+}
+
+inline void BigInt::Mul(const BigInt& other)
+{
+  // For now since this is just for problem 20 and I happen to know "other" is a small value, just add
+  // this value to itself that many times. Need a copy though since Add is destructive.
+  const BigInt self = *this;
+  const BigInt increment("1");
+
+  // Start current at 1 because self already has itself so adding once would double it.
+  for (BigInt current("1"); current < other; current.Add(increment)) {
+    this->Add(self);
+  }
+}
+
+
+inline bool BigInt::operator<(const BigInt& other) const
+{
+  // Different number of digits implies one is less than the other
+  if (m_self.size() != other.m_self.size()) {
+    return m_self.size() < other.m_self.size();
+  }
+
+  // Otherwise they're the same size, compare them in reverse since the
+  // string is stored in reverse.
+  return std::lexicographical_compare(m_self.rbegin(),       m_self.rend(),
+                                      other.m_self.rbegin(), other.m_self.rend());
 }
 
 inline std::string BigInt::reverse(const std::string& in) const

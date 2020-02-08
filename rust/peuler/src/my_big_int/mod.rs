@@ -1,5 +1,5 @@
 // Just enough BigInt for problems 13 and 16
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct BigInt {
   rep: Vec<u8>, // ascii "string" form of the int, stored with least significant digit first
 }
@@ -35,6 +35,45 @@ impl std::ops::AddAssign<&BigInt> for BigInt {
       result.push('1' as u8);
     }
     self.rep = result;
+  }
+}
+
+// Implement *=
+impl std::ops::MulAssign<&BigInt> for BigInt {
+  fn mul_assign(&mut self, other: &BigInt) {
+    // For now since this is just for problem 20 and I happen to know "other" is a small value, just add
+    // this value to itself that many times. Need a copy though since only add_assign is implemented
+    let copy = self.clone();
+    let increment = BigInt::new("1");
+    let mut current = BigInt::new("1"); // start at 1 because self already has its own value
+    while current < *other {
+      *self += &copy;
+      current += &increment;
+    }
+  }
+}
+
+// Implement the ability to compare via <
+impl PartialOrd for BigInt {
+  fn partial_cmp(&self, other: &BigInt) -> Option<std::cmp::Ordering> {
+    Some(self.cmp(other))
+  }
+}
+
+impl Ord for BigInt {
+  fn cmp(&self, other: &BigInt) -> std::cmp::Ordering {
+    // If sizes don't match, that's enough to know which is bigger
+    if self.rep.len() < other.rep.len() { return std::cmp::Ordering::Less;    }
+    if self.rep.len() > other.rep.len() { return std::cmp::Ordering::Greater; }
+
+    // Otherwise, have to look at each character in reverse order. Zip them together and check
+    let mut iter = self.rep.iter().rev().zip(other.rep.iter().rev());
+    while let Some( (a, b) ) = iter.next() {
+      if a < b { return std::cmp::Ordering::Less;    }
+      if a > b { return std::cmp::Ordering::Greater; }
+    }
+
+    return std::cmp::Ordering::Equal;
   }
 }
 
