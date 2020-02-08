@@ -4,10 +4,9 @@ import (
   "fmt"
 )
 
-// Implement problem 21 (find the sum of all amicable numbers below 10000
+// Implement problem 21 (find the sum of all amicable numbers below 10000)
 func main() {
   numToSum := make(map[int]int)
-  sumToNums := make(map[int][]int)
 
   // Build up all the sums
   for i := 1; i < 10000; i++ {
@@ -19,7 +18,6 @@ func main() {
       }
     }
     numToSum[i] = sum
-    sumToNums[sum] = append(sumToNums[sum], i)
   }
 
   // Figure out which numbers are amicable
