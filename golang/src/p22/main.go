@@ -11,13 +11,14 @@ func main() {
   names := readNames()
   sort.Strings(names)
 
-  totalScore := uint64(0)
+  totalScore := 0
   for i, name := range names {
-    wordScore := uint64(0)
+    wordScore := 0
     for _, c := range name {
-      wordScore += uint64(c - 'A') + uint64(1)
+      // Only works if names are all capital letters (they are). Add 1 since A is 1, not 0.
+      wordScore += int(c - 'A') + 1
     }
-    totalScore += wordScore * uint64(i+1)
+    totalScore += wordScore * (i+1)
   }
 
   fmt.Println(totalScore)
