@@ -43,31 +43,19 @@ bool isSumOfTwoAbundants(int n, const std::vector<int>& abundantNumbers) {
   return false;
 }
 
-// Merges toMerge into a flattened result while maintaining order. Only works if -1 is not a valid element in the toMerge vectors.
-std::vector<int> merge(const std::vector<std::vector<int>>& toMerge) {
-  std::vector<int> result;
-  for (const auto& vec : toMerge) {
-    for (const int val : vec) {
-      result.emplace_back(val);
-    }
-  }
-
-  std::sort(result.begin(), result.end());
-  return result;
-}
-
 int main() {
   const int numThreads = std::thread::hardware_concurrency();
 
+  // abundant numbers for thread data. Each threads puts results here.
+  // numbers that are abundant get 1, others get 0
+  std::vector<int> abundantNumbers(28123);
+
   // Phase 1: stride through the data and generate per-thead abundant numbers
   std::vector<std::thread> threads;
-  std::vector<std::vector<int>> abundantNumbersPerThread(numThreads);
   for (int threadNum = 0; threadNum < numThreads; ++threadNum) {
-    threads.emplace_back([&abundantNumbersPerThread, numThreads, threadNum]() {
+    threads.emplace_back([&abundantNumbers, numThreads, threadNum]() {
       for (int i = 1+threadNum; i <= 28123; i += numThreads) {
-        if (isAbundant(i)) {
-          abundantNumbersPerThread[threadNum].emplace_back(i);
-        }
+        abundantNumbers[i-1] = isAbundant(i);
       }
     });
   }
@@ -76,8 +64,16 @@ int main() {
   }
   threads.clear();
 
-  // Phase 2: merge the per-thread data together
-  const std::vector<int> abundantNumbers = merge(abundantNumbersPerThread);
+  // Phase 2: Go back through and update the numbers "correctly".
+  // Even though it doesn't take much space, we'll do it in-place
+  int nextIndex = 0;
+  for (int i = 0; i < 28123; ++i) {
+    if (abundantNumbers[i] > 0) {
+      abundantNumbers[nextIndex] = i+1;
+      ++nextIndex;
+    }
+  }
+  abundantNumbers.resize(nextIndex);
 
   // Phase 3: split back out again and calculate the per-thread sums
   std::vector<int> perThreadSums(numThreads, 0);
