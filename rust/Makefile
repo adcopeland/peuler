@@ -6,7 +6,7 @@ TARGET:=peuler/target/release/p$(PROBLEM)
 
 all: $(TARGET)
 	@echo Running $(TARGET)...
-	@time -f "%E seconds" $(TARGET)
+	@time -f "%e seconds  %U user cpu seconds  %M KB peak memory usage" $(TARGET)
 
 .PHONY: $(TARGET)
 $(TARGET):

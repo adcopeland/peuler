@@ -9,7 +9,7 @@ CXXFLAGS?=-Isrc/acommon -Isrc/p$(PROBLEM) -O3 -Wall -Werror -flto -pthread -std=
 
 all: $(TARGET)
 	@echo Running $(TARGET)...
-	@time -f "%E seconds" $(TARGET)
+	@time -f "%e seconds  %U user cpu seconds  %M KB peak memory usage" $(TARGET)
 
 $(TARGET): $(wildcard src/p$(PROBLEM)/*) | build
 	$(CXX) $(CXXFLAGS) -o $@ $(SOURCES)
