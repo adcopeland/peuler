@@ -1,7 +1,7 @@
 # Docker (linux or WSL2)
 First, build the docker runner: `docker build -t peuler .`
 
-Then run: `docker run -it --rm -v $(pwd):/src -w /src peuler make LANGUAGE=cpp PROBLEM=1
+Then run: `docker run -it --rm -v $(pwd):/src -w /src peuler make LANGUAGE=cpp PROBLEM=1`
 
 Where LANGUAGE can be cpp, rust, golang and PROBLEM can be anything output by `bash list.sh <LANGUAGE>`
 
